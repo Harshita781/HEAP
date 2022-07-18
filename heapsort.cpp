@@ -1,25 +1,17 @@
 #include<iostream>
-#include<stdlib.h>
 using namespace std;
 
-void getArray(int *arr, int n)
-{
-    for(int i=0; i<n; i++)
-    {
-        cin>>arr[i];
-    }
-}
-void heapify(int *arr, int n, int i)
+void heapify(int arr[], int n, int i)
 {
 
     int largest = i;
-    int left = 2 * i + 1;
-    int right = 2 * i + 2;
+    int left = 2 * i;
+    int right = 2 * i + 1;
 
-    if (left < n && arr[left] > arr[largest])
+    if (left <= n && arr[left] > arr[largest])
         largest = left;
 
-    if (right < n && arr[right] > arr[largest])
+    if (right <= n && arr[right] > arr[largest])
         largest = right;
 
     if (largest != i)
@@ -29,36 +21,30 @@ void heapify(int *arr, int n, int i)
     }
 }
 
-void heapSort(int *arr, int n)
+void heapSort(int arr[], int n)
 {
-
-    for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
-
-
-    for (int i = n - 1; i >= 0; i--)
-    {
-        swap(arr[0], arr[i]);
-        heapify(arr, i, 0);
-    }
+   int size=n;
+   while(size>1){
+    swap(arr[size],arr[1]);
+    size--;
+    heapify(arr,size,1);
+   }
 }
 
-void printArray(int *arr, int n)
+void print(int arr[], int n)
 {
-    for (int i = 0; i < n; ++i)
+    for (int i = 1; i <= n; i++)
         cout << arr[i] << " ";
     cout << "\n";
 }
-
 int main()
 {
-    int n;
-    cout<<"Enter size of array: ";
-    cin>>n;
-    int *arr= new int[n];
-    cout<<"Enter elements in a array: ";
-    getArray(arr,n);
-    heapSort(arr, n);
-    cout << "Sorted array is: ";
-    printArray(arr, n);
+    int arr[6]={-1,54,53,55,52,50};
+    int n=5;
+    for(int i=n/2;i>0;i--){
+        heapify(arr,n,i);
+    }
+    print(arr,n);
+    heapSort(arr,n);
+    print(arr,n);
 }
